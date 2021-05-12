@@ -1,0 +1,2 @@
+- command: cp -r /etc/ansible/ /var/tmp/pssa/pssa-{{inventory_hostname}}
+  ignore_errors: yes

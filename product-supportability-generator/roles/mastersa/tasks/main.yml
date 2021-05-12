@@ -1,0 +1,4 @@
+- name: run master collection script
+  import_tasks: mastercollect.yml
+- name: archive data from masters without etcd colocated
+  import_tasks: archivemastersa.yml

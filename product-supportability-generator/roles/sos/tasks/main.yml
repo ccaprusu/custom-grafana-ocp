@@ -1,0 +1,2 @@
+- name: run sosreport 
+  import_tasks: sos.yml

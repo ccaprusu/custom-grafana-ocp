@@ -1,0 +1,101 @@
+---
+- hosts: all
+  gather_facts: no
+  vars_files:
+    - /root/openshift/ocp/playbooks/_vars.yml
+  environment:
+  # Uncomment this env vars if bastion host are INHAS or NAHAS from BI
+  #  https_proxy: "http://appaccess-zscaler.boehringer.com:80"
+  #  http_proxy: "http://appaccess-zscaler.boehringer.com:80"
+  #  no_proxy: ".boehringer.com"
+  tasks:
+  - name: Crossvale dcoper scripts directory is present
+    file:
+      path: "{{ scripts_crossvale }}"
+      state: directory
+      mode: '0755'
+      owner: root
+      group: root
+  - name: Synchronization ephemeral_storage_collector.sh
+    synchronize:
+      src: "{{ ocp_home }}/custom-monitoring/ephemeral_storage_collector.sh"
+      dest: "{{ scripts_crossvale }}"
+      delete: yes
+  - name: Check that jq exist
+    file:
+      path: "/usr/bin/jq"
+      owner: "root"
+      group: "root"
+      mode: '0755'
+    register: jq_exists
+    ignore_errors: yes
+  - name: Install jq
+    get_url:
+      url: "{{ jq_url }}"
+      dest: "/usr/bin/jq"
+      mode: '0755'
+    when:  jq_exists.state == "absent"
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - /root/openshift/ocp/playbooks/_vars.yml
+  tasks:
+  - name: delete old tmp files
+    file:
+      state: absent
+      path: "{{ item }}"
+    loop:
+      - "/tmp/ephemeral_storage_report.xlsx"
+      - "/tmp/{{ container_id_list_for_images_greater_than_GBmaxsize }}"
+      - "/tmp/{{ container_id_list_for_writable_layer_greater_than_MBmaxsize }}"
+- hosts: app
+  gather_facts: no
+  vars_files:
+    - /root/openshift/ocp/playbooks/_vars.yml
+  tasks:
+  - name: execute ephemeral_storage_collector.sh
+    shell: "{{ scripts_crossvale }}/ephemeral_storage_collector.sh &> /var/log/ephemeral_storage_collector.log"
+  - name: fetch csv output data files from ephemeral_storage_collector.sh
+    fetch:
+      src: "/tmp/{{ item }}.csv"
+      dest: "/tmp/{{ item  }}/{{ item }}-{{ inventory_hostname }}.csv"
+      flat: yes
+    loop:
+      - "{{ container_id_list_for_images_greater_than_GBmaxsize }}"
+      - "{{ container_id_list_for_writable_layer_greater_than_MBmaxsize }}"
+- hosts: localhost
+  gather_facts: yes
+  vars_files:
+    - /root/openshift/ocp/playbooks/_vars.yml
+  tasks:
+  - name: assemble csv output data files from ephemeral_storage_collector.sh
+    assemble:
+      src: "/tmp/{{ item }}"
+      dest: "/tmp/{{ item  }}/{{ item }}.csv"
+    loop:
+      - "{{ container_id_list_for_images_greater_than_GBmaxsize }}"
+      - "{{ container_id_list_for_writable_layer_greater_than_MBmaxsize }}"
+  - name: add headers to csv files
+    lineinfile:
+      path: "/tmp/{{ item }}/{{ item }}.csv"
+      insertbefore: BOF
+      line: '"Node","Namespace","Pod","Container","Ephemeral Storage Size","Container Image ID","Image Name","Image Size","Author","Container ID","Jenkins Job","Repo Url","Repo Branch"'
+    loop:
+      - "{{ container_id_list_for_images_greater_than_GBmaxsize }}"
+      - "{{ container_id_list_for_writable_layer_greater_than_MBmaxsize }}"
+  - name: create excel file
+    shell: "/usr/local/bin/ephemeral_storage_data_to_excel"
+- hosts: app
+  gather_facts: no
+  vars_files:
+    - /root/openshift/ocp/playbooks/_vars.yml
+  tasks:
+  - name: Sending an e-mail using the local machine
+    mail:
+      subject: "{{ cluster_config[openshift_master_cluster_hostname].cluster }} Images and Ephemeral Storage report"
+      attach: "/tmp/ephemeral_storage_report.xlsx"
+      from: "{{ cluster_config[openshift_master_cluster_hostname].cluster }}.root.{{ inventory_hostname_short }}@boehringer-ingelheim.com"
+      to:
+        - zzIT INF ECS Container Services <zzITINFECSContainerServices@boehringer-ingelheim.com>
+    delegate_to: localhost
+    run_once: yes

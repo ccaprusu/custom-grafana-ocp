@@ -1,0 +1,4 @@
+- archive:
+    path: /var/tmp/pssa/pssa-{{inventory_hostname}}
+    dest: "/var/tmp/pssa/{{inventory_hostname}}.tar"
+    remove: yes

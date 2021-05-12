@@ -1,0 +1,26 @@
+apiVersion: "v1"
+kind: "LimitRange"
+metadata:
+  name: "template-limit-range" #Change the metadata before applying this. Just to make sense 
+spec:
+  limits:
+    - type: "Pod"
+      max:
+        cpu: ""
+        memory: ""
+      min:
+        cpu: ""
+        memory: ""
+    - type: "Container"
+      max:
+        cpu: ""
+        memory: ""
+      min:
+        cpu: ""
+        memory: ""
+      default:
+        cpu: ""
+        memory: ""
+      defaultRequest:
+        cpu: ""
+        memory: ""

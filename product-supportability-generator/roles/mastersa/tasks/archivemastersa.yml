@@ -1,0 +1,14 @@
+- archive:
+    path:
+      - /etc/origin/master/*
+      - /etc/origin/node/*
+      - /var/tmp/pssa/tmp/*
+    dest: "/var/tmp/pssa/pssa-{{inventory_hostname}}/{{inventory_hostname}}-master.tar"
+    exclude_path:
+      - /etc/origin/master/*.key
+      - /etc/origin/master/*.crt
+      - /etc/origin/master/named_certificates
+      - /etc/origin/master/master.etcd-client.csr
+      - /etc/origin/master/htpasswd*
+      - /etc/origin/node/*.key
+      - /etc/origin/node/*.crt

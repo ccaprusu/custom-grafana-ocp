@@ -1,0 +1,5 @@
+- file:
+    path: "/var/tmp/pssa/{{item}}"
+    mode: 0777
+    state: directory
+  with_items: ["pssa-{{inventory_hostname}}","tmp"]

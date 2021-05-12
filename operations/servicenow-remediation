@@ -1,0 +1,46 @@
+FHB ServiceNow Integration
+
+FIS has SNOW - they manage all their tickets via SNOW
+SNOW is the director and we would implement the remediation actions in Tower to fix problems in our AWS environment
+
+Issue is raised to SNOW - the decision on how to handle it (auto, manual) is determined, then we would build the automation solutions in Tower
+
+Three general categories
+	infra mgmt - patching RHEL / OCP
+		FIS sees this as two buckets
+			Infra commission/decomm
+			Security overhaul
+	CI/CD dev efforts - app promotion
+	app / infra remediation
+
+Automated Tasking for OpenShift and AWS management
+
+Infra -
+	System - Patching Kernel
+	System - Patching Repos
+	Node health - Node drain and restart
+	Node health - Node drain, delete and recreate
+	Node health - Routine disk maintenance
+	Cluster - Scale node
+	Cluster - Patching / upgrading
+	Registry - Pruning
+	Registry - Image quota hit
+Application -
+	App health - Alerting - Crashloop Backoff
+	App health - Alerting - OOM Kills
+	App health - Alerting - Failed health checks
+	App performance - Slow response / cycle
+	App performance - Consumption out of bounds / cycle
+	App performance - Unresponsive / cycle
+	App deployment - Image promotion
+	App deployment - Test validation reporting
+	App deployment - Validated deployment configuration 
+Security -
+	Access - Invalid platform access attempt
+	Audit - External registry connections
+	Audit - Container ingress approval
+	Registry - Vulnerability alert
+	System - CVE Advisory
+
+
+	

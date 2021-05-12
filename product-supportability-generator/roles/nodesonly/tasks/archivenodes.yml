@@ -1,0 +1,8 @@
+- archive:
+    path:
+      - /etc/origin/node/*
+    dest: "/var/tmp/pssa/pssa-{{inventory_hostname}}/{{inventory_hostname}}-node.tar"
+    exclude_path:
+      - /etc/origin/node/*.key
+      - /etc/origin/node/*.crt
+

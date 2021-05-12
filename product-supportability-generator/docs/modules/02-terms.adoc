@@ -1,0 +1,24 @@
+=== Terminology
+
+.Terminology Table
+[cols=2,cols="2,5",options=header]
+|===
+|Term 
+|Definition
+
+|RHEL
+|Red Hat Enterprise Linux
+
+|OCP
+|{ocp}
+
+|HA
+|High Availability
+
+|VM
+|Virtual Machine
+
+|MSP
+|Managed Services
+
+|===

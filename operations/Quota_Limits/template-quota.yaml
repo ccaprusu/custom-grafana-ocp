@@ -1,0 +1,12 @@
+apiVersion: "v1"
+kind: "ResourceQuota"
+metadata:
+  name: "template-quota" # Change metadata when applying this yaml
+spec:
+  hard: #Order is cpu(rq,lm), memory(rq,lm), ES(rq,lm)
+    requests.cpu: ""
+    limits.cpu: "" 
+    requests.memory: ""
+    limits.memory: ""
+    requests.ephemeral-storage: ""
+    limits.ephemeral-storage: ""

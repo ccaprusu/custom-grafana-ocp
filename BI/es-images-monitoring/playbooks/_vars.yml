@@ -1,0 +1,70 @@
+ocp_home: "/root/openshift/ocp"
+dcoper: "/dcoper"
+ocoper: "{{ dcoper }}/ocoper"
+scripts: "{{ ocoper }}/scripts"
+scripts_backup: "{{ scripts }}/backup"
+scripts_ocphealth: "{{ scripts }}/ocphealth"
+crossvale: "{{ dcoper }}/crossvale"
+scripts_crossvale: "{{ crossvale }}/scripts"
+
+bin: /usr/bin
+find: "{{ bin }}/find"
+grep: "{{ bin }}/grep"
+grep_word: "{{ grep }} --word-regexp"
+cut: "{{ bin }}/cut"
+mailx: "{{ bin }}/mailx"
+
+mailx_to: "zzITINFECSContainerPaaS@boehringer-ingelheim.com zzITINFECSContainerServices@boehringer-ingelheim.com"
+
+cluster_config:
+  "chn-oc-int.ap.boehringer.com":
+    cluster: chn-ocprod
+    oc_adm_groups_param: "--sync-config=/net/172.23.71.150/shhsafascl01_fs01_conpaaspro_0014_1sr/ocp/chn-ocprod/config/groupsyncconfig.yaml --confirm"
+  "chn-ocdev-int.ap.boehringer.com":
+    cluster: chn-ocdev
+    oc_adm_groups_param: "--sync-config=/net/172.23.71.150/shhsafascl01_fs01_conpaasdev_0015_1sr/ocp/chn-ocdev/config/groupsyncconfig.yaml --confirm"
+  "inh-oc-int.eu.boehringer.com":
+    cluster: inh-ocprod
+  "inh-ocdev-int.eu.boehringer.com":
+    cluster: inh-ocdev
+  "inh-ods-int.eu.boehringer.com":
+    cluster: inh-ods
+  "nah-oc-int.am.boehringer.com":
+    cluster: nah-ocprod
+  "nah-ocdev-int.am.boehringer.com":
+    cluster: nah-ocdev
+  "octest-int.am.boehringer.com":
+    cluster: octest
+  "vie-oc-int.eu.boehringer.com":
+    cluster: vie-ocprod
+
+oc: "{{ bin }}/oc"
+oc_adm_groups: "{{ oc }} adm groups"
+oc_adm_groups_param: "--sync-config={{ ocoper }}/config/groupsyncconfig.yaml --confirm"
+oc_create: "{{ oc }} create"
+oc_delete: "{{ oc }} delete"
+oc_get: "{{ oc }} get"
+oc_get_all_pods: "{{ oc_get }} pods --all-namespaces"
+oc_patch_storageclass: "{{ oc }} patch storageclass"
+
+is_default_class: storageclass.kubernetes.io/is-default-class
+
+trident_install_version: "20.04.0"
+trident_url: "https://github.com/NetApp/trident/releases/download/v{{ trident_install_version }}/trident-installer-{{ trident_install_version }}.tar.gz"
+trident_installer: "{{ dcoper }}/trident-installer"
+#trident_installer_setup: "{{ trident_installer }}/setup-dr"  # do a quick check to ensure backend*.json is current
+trident_installer_setup: "{{ trident_installer }}/setup"
+trident_namespace: "trident"
+tridentctl: "{{ trident_installer }}/tridentctl --namespace {{ trident_namespace }}"
+tridentread: "tridentread"
+trident_config:
+  ontapnas:
+    file: "{{ trident_installer_setup }}/backend.json"
+  ontapnaseco:
+    file: "{{ trident_installer_setup }}/backend-eco.json"
+  ontapnasinfra:
+    file: "{{ trident_installer_setup }}/backend-infra.json"
+
+jq_url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+container_id_list_for_images_greater_than_GBmaxsize: "container_id_list_for_images_greater_than_GBmaxsize"
+container_id_list_for_writable_layer_greater_than_MBmaxsize: "container_id_list_for_writable_layer_greater_than_MBmaxsize"
