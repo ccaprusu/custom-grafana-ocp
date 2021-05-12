@@ -1,2 +1,0 @@
- - name: create pssa temp directory
-   import_tasks: mkdir.yml

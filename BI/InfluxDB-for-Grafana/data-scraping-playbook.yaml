@@ -1,7 +1,0 @@
-- hosts: app
-  gather_facts: no
-  vars_files:
-    - /root/openshift/ocp/playbooks/_vars.yml
-  tasks:
-  - name: execute data-scraping.sh
-    shell: "{{ scripts_ocphealth }}/data-scraping.sh &> /var/log/data-scraping.sh.log"

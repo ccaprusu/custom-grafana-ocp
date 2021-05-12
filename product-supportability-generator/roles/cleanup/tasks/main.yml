@@ -1,2 +1,0 @@
-- name: delete pssa directory on all hosts
-  import_tasks: cleanup.yml

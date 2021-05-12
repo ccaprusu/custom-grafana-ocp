@@ -1,2 +1,0 @@
- - command: sosreport --batch -o  auditd,block,cgroups,chrony,cron,devicemapper,devices,docker,etcd,filesys,general,gluster,hardware,kernel,kubernetes,memory,networking,nfs,openvswitch,origin,process,processor,rpm,scsi,selinux,services,subscription_manager,system,systemd,tuned,xfs,yum,atomichost,ntp --tmp-dir /var/tmp/pssa/pssa-{{inventory_hostname}} --name {{inventory_hostname}}
-

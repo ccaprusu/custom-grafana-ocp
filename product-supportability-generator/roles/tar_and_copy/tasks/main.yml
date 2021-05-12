@@ -1,4 +1,0 @@
-- name: tar pssa folder
-  import_tasks: tarfolder.yml
-- name: copy files to localhost
-  import_tasks: copytolocal.yml

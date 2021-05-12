@@ -1,4 +1,0 @@
-- archive :
-    path: /var/tmp/pssa/tmp/*
-    dest: "/var/tmp/pssa-out.gz"
-    remove: yes

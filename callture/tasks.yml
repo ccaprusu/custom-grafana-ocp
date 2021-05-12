@@ -1,7 +1,0 @@
-  
-- hosts: localhost
-  gather_facts: no
-
-  tasks: 
-    - name: Launch callture script
-      shell: "bash /root/msp-ocp/callture/callture_rota_change.sh" 

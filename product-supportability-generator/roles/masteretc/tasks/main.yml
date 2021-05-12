@@ -1,6 +1,0 @@
-- name: run master collection script
-  import_tasks: mastercollect.yml
-- name: run etcd collection script
-  import_tasks: etcdcollect.yml
-- name: archive data from masters and colocated etcd
-  import_tasks: archivemasteretcd.yml

@@ -1,2 +1,0 @@
-- name: archive data from nodes
-  import_tasks: archivenodes.yml

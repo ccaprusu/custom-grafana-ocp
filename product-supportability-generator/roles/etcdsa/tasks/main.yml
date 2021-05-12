@@ -1,4 +1,0 @@
-- name: run etcd collection script
-  import_tasks: etcdcollect.yml
-- name: archive data from standalone etcd
-  import_tasks: archiveetcdsa.yml

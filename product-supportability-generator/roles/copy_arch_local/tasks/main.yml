@@ -1,4 +1,0 @@
-- name: copy ansible files from default directory
-  import_tasks: copy_local.yml
-- name: pack up all collected data and remove collected files locally
-  import_tasks: packup.yml

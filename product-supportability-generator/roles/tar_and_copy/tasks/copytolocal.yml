@@ -1,4 +1,0 @@
-- fetch:
-    src:  "/var/tmp/pssa/{{inventory_hostname}}.tar"
-    dest: /var/tmp/pssa/tmp/
-    flat: yes
